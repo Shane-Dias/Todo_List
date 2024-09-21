@@ -2,6 +2,9 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+
 
 const App = () => {
   const [todo, setTodo] = useState("");
@@ -58,14 +61,14 @@ const App = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto my-3 bg-blue-300 p-3 min-h-[80vh] rounded-xl">
+      <div className="container mx-auto my-3 bg-blue-300 p-3 min-h-[80vh] md:w-4/6 rounded-xl">
         <div className="addtodo m-5 ">
           <h2 className="font-semibold text-2xl">Add a todo</h2>
           <input
             onChange={handleChange}
             value={todo}
             type="text"
-            className="bg-slate-300 w-1/2"
+            className="bg-slate-300 w-3/4 py-2 rounded-md px-2  border-none outline-none focus:outline-green-700"
           />
           <button
             onClick={handleAdd}
@@ -82,7 +85,7 @@ const App = () => {
           return (
             <div
               key={item.id}
-              className="todos flex mt-3 w-3/4 flex-nowrap items-center"
+              className="todos flex mt-3 w-full flex-nowrap items-center"
             >
               <input
                 className="mr-2"
@@ -98,15 +101,16 @@ const App = () => {
               <div className="buttons">
                 <button
                   onClick={()=>handleEdit(item.id)}
-                  className="bg-blue-700 rounded px-2 ml-2 text-white hover:bg-blue-900"
+                  disabled={todo==""?false:true}
+                  className={`bg-blue-700 rounded p-2 ml-2 text-white hover:bg-blue-900 ${todo==""?"": "cursor-not-allowed"}`}
                 >
-                  Edit
+                  <FaEdit />
                 </button>
                 <button
                   onClick={()=>handleDelete(item.id)}
-                  className="bg-blue-700 rounded px-2 ml-2 mt-2 text-white hover:bg-blue-900"
+                  className=" bg-blue-700 rounded p-2 ml-2 mt-2 text-white hover:bg-blue-900"
                 >
-                  Delete
+                  <MdDelete/>
                 </button>
               </div>
             </div>
