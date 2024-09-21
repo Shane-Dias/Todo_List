@@ -6,10 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 const App = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+
+  // useEffect(() => {
+  //   console.log(todos);
+  // }, [todos])
+  
   const handleAdd = () => {
     setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
     setTodo("");
-    console.log(todos);
   };
   const handleCheckbox = (id) => {
     setTodos(
@@ -21,7 +25,15 @@ const App = () => {
     );
   };
   const handleEdit = () => {};
-  const handleDelete = () => {};
+  const handleDelete = (e,id) => {
+    setTodos(
+      todos.filter( (item) => {
+        if (item.id!==id) {
+          return item
+        }
+      })
+    )
+  };
   const handleChange = (e) => {
     setTodo(e.target.value);
   };
@@ -71,7 +83,7 @@ const App = () => {
                   Edit
                 </button>
                 <button
-                  onClick={handleDelete}
+                  onClick={(e)=>handleDelete(e,item.id)}
                   className="bg-blue-700 rounded px-2 ml-2 mt-2 text-white hover:bg-blue-900"
                 >
                   Delete
