@@ -7,9 +7,9 @@ const App = () => {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
 
-  // useEffect(() => {
-  //   console.log(todos);
-  // }, [todos])
+  useEffect(() => {
+    console.log(todos);
+  }, [todos])
   
   const handleAdd = () => {
     setTodos([...todos, { id: uuidv4(), todo, isCompleted: false }]);
@@ -24,8 +24,18 @@ const App = () => {
       )
     );
   };
-  const handleEdit = () => {};
-  const handleDelete = (e,id) => {
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete it?")) {
+      setTodos(
+        todos.filter( (item) => {
+          if (item.id!==id) {
+            return item
+          }
+        })
+      )
+    }
+  };
+  const handleEdit = (id) => {
     setTodos(
       todos.filter( (item) => {
         if (item.id!==id) {
@@ -33,6 +43,13 @@ const App = () => {
         }
       })
     )
+    let t=todos.filter( (item) => {
+      if (item.id===id) {
+        return item
+      }
+    })
+    setTodo(t[0].todo)
+    
   };
   const handleChange = (e) => {
     setTodo(e.target.value);
@@ -42,8 +59,8 @@ const App = () => {
     <div>
       <Navbar />
       <div className="container mx-auto my-3 bg-blue-300 p-3 min-h-[80vh] rounded-xl">
-        <div className="addtodo m-5">
-          <h2 className="font-semibold">Add a todo</h2>
+        <div className="addtodo m-5 ">
+          <h2 className="font-semibold text-2xl">Add a todo</h2>
           <input
             onChange={handleChange}
             value={todo}
@@ -52,12 +69,15 @@ const App = () => {
           />
           <button
             onClick={handleAdd}
-            className="bg-blue-700 rounded px-2 ml-2 text-white hover:bg-blue-900"
+            disabled={todo.trim()==""?true:false}
+            className={`bg-blue-700 rounded px-2 ml-2 text-white hover:bg-blue-900 ${todo.trim()==""?'opacity-50 cursor-not-allowed':''}`}
           >
             Add
           </button>
         </div>
-        <h2 className="font-semibold">Your Todos</h2>
+        <h2 className="font-semibold text-4xl">Your Todos</h2>
+        {todos.length===0 && <div className="m-4 text-purple-800">No todos currently</div>}
+        
         {todos.map((item) => {
           return (
             <div
@@ -77,13 +97,13 @@ const App = () => {
               </div>
               <div className="buttons">
                 <button
-                  onClick={handleEdit}
+                  onClick={()=>handleEdit(item.id)}
                   className="bg-blue-700 rounded px-2 ml-2 text-white hover:bg-blue-900"
                 >
                   Edit
                 </button>
                 <button
-                  onClick={(e)=>handleDelete(e,item.id)}
+                  onClick={()=>handleDelete(item.id)}
                   className="bg-blue-700 rounded px-2 ml-2 mt-2 text-white hover:bg-blue-900"
                 >
                   Delete
