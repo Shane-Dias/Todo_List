@@ -75,6 +75,7 @@ const App = () => {
             value={todo}
             type="text"
             className="bg-slate-300 w-3/4 py-2 rounded-md px-2  border-none outline-none focus:outline-green-700 focus:shadow-xl"
+            placeholder="Add a new To-Do"
           />
           <button
             onClick={handleAdd}
