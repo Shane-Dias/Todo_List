@@ -12,13 +12,11 @@ This to-do list application allows users to add, edit, delete, and mark tasks as
 
 ## Technology Used
 - HTML, CSS, JavaScript
-- JSX
 - React js
 
 ## Tools
 - Tailwind
 - Vite
-- Node.js
 - React Icons
 - Netlify
 - uuid
